@@ -1,0 +1,17 @@
+{
+	'presets':["env", "react"],
+  	"plugins": [ 	
+  	["react-transform", {
+       "transforms": [{
+         "transform": "react-transform-hmr",
+         
+         "imports": ["react"],
+         
+         "locals": ["module"]
+       }]
+     }],
+     ['import', {"libraryName": "antd", "style": true}]
+    ]
+		
+	
+}
