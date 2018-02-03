@@ -33,3 +33,8 @@
 		transform:rotate(360deg);
 	}
 }
+
+.note{
+	width:auto;
+	height:80px;
+}
