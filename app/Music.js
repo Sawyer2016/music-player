@@ -22,7 +22,30 @@ class Music extends React.Component{
   	
   }
 
-  
+  componentDidMount(){
+    const {index} =this.props
+    let react=this
+    if(index){
+      this.setState({indexOfSongs:index})
+    }
+    var node = this.refs.player
+    this.listReverseMode(node)
+    node.oncanplay=()=>{
+      this.setState({duration:node.duration})
+    }
+    document.body.onkeydown=react.pressSpace
+    setInterval(()=>{this.setState({currentValue:node.currentTime})},1000)
+  }
+
+  //click space
+  pressSpace = () =>{  
+    if(event.keyCode==32)
+      {
+        this.handleAudio()
+      }
+  }
+
+  //play or pause the music
   handleAudio = () => {
   	var node = this.refs.player 	
   	this.setState({isPlay:!this.state.isPlay},()=>{
@@ -34,6 +57,7 @@ class Music extends React.Component{
   	})
   }
 
+  //play next song
   nextSong = () => {
   	let index = this.state.indexOfSongs
   	let songs = this.state.library
@@ -45,7 +69,9 @@ class Music extends React.Component{
   	}
     this.gotoMusic(index)
   }
+  
 
+  //play pre song
   preSong = () =>  {
   	let index = this.state.indexOfSongs
   	let songs = this.state.library
@@ -65,6 +91,7 @@ class Music extends React.Component{
   	return totalTime
   }
 
+  //change time of music
   handleChange = (value) =>{
     var node = this.refs.player
     node.currentTime=value
@@ -74,7 +101,8 @@ class Music extends React.Component{
   setVisible =(visible)=>{
     this.setState({visible:visible})
   }
-
+  
+  //turn to specific music
   gotoMusic =(id) =>{
     if(id!=this.state.indexOfSongs){
       this.setState({visible:false,indexOfSongs:id, isPlay:true, currentValue:0})
@@ -88,6 +116,7 @@ class Music extends React.Component{
     }
   }
   
+  // change mode
   changeMode = ()=>{
     var node = this.refs.player
     if(this.state.mode=='list-reverse'){
@@ -116,18 +145,7 @@ class Music extends React.Component{
 
   
 
-  componentDidMount(){
-    const {index} =this.props
-    if(index){
-      this.setState({indexOfSongs:index})
-    }
-  	var node = this.refs.player
-  	this.listReverseMode(node)
-  	node.oncanplay=()=>{
-  		this.setState({duration:node.duration})
-  	}
-  	setInterval(()=>{this.setState({currentValue:node.currentTime})},1000)
-  }
+  
   render() {
   	const {indexOfSongs, library, duration, currentValue, mode} = this.state
   	let totalTime=this.getFormatTime(duration)
@@ -137,7 +155,7 @@ class Music extends React.Component{
           <div style={{display:'flex', alignItems:'flex-end',fontSize:'24px',justifyContent:'space-between'}}>
             <img src="./images/音符.jpg" className={styles.note} /> 
             <Link to="/library">曲库</Link>
-            <Link to='/favMusic'>试听列表</Link>
+            {/*<Link to='/favMusic'>试听列表</Link>*/}
           </div>
     		  <h1 style={{marginTop:'40px',marginBottom:'20px',textAlign:'center'}}>{library[indexOfSongs].name}</h1>	      
 	        <div className={styles.imgBox}>
