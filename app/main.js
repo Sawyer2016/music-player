@@ -14,7 +14,7 @@ import rootSaga from './saga'
 const sagaMiddleware = createSagaMiddleware()
 var store=createStore(cunrrentMusic,applyMiddleware(sagaMiddleware))
 sagaMiddleware.run(rootSaga)
-
+console.log(11111)
 render((
 	<Provider store={store}>
 	<App />
